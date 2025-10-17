@@ -1,36 +1,33 @@
 function comparar() {
-  const cash = parseFloat(document.getElementById("cash").value);
-  const precoGoldPorMil = parseFloat(document.getElementById("precoGoldPorMil").value);
+  const itemCash = parseFloat(document.getElementById("itemCash").value);
+  const itemGold = parseFloat(document.getElementById("itemGold").value);
+  const goldPorCash = parseFloat(document.getElementById("goldPorCash").value);
   const precoGoldReal = parseFloat(document.getElementById("precoGoldReal").value);
 
-  if (isNaN(cash) || isNaN(precoGoldPorMil) || isNaN(precoGoldReal)) {
+  if (isNaN(itemCash) || isNaN(itemGold) || isNaN(goldPorCash) || isNaN(precoGoldReal)) {
     document.getElementById("resultado").innerText = "Preencha todos os campos corretamente.";
     return;
   }
 
-  // 💸 Custo em reais via site
-  const valorReaisSite = (cash * 0.0025).toFixed(2);
+  // 💸 Valor do item em reais via cash
+  const valorCashReais = itemCash * 0.0025;
 
-  // 🪙 Custo em gold via mercado
-  const valorGoldKK = (cash / 1000) * precoGoldPorMil;
+  // 🧱 Valor do item em reais via gold
+  const valorGoldReais = (itemGold / 500) * precoGoldReal;
 
-  // 🧱 Custo em reais para comprar esse gold
-  const valorReaisGold = ((valorGoldKK / 1000000000) * precoGoldReal).toFixed(2);
-
-  // ✅ Comparação
+  // 📊 Comparação
   let vantagem = "";
-  if (valorReaisSite < valorReaisGold) {
-    vantagem = "💰 Vale mais a pena comprar com cash do site.";
-  } else if (valorReaisSite > valorReaisGold) {
-    vantagem = "🪙 Vale mais a pena comprar com gold comprado em reais.";
+  if (valorCashReais < valorGoldReais) {
+    vantagem = "💰 Vale mais a pena comprar com cash.";
+  } else if (valorCashReais > valorGoldReais) {
+    vantagem = "🪙 Vale mais a pena comprar com gold.";
   } else {
     vantagem = "⚖️ O custo é equivalente nas duas opções.";
   }
 
   document.getElementById("resultado").innerHTML = `
-    <p>💵 Custo em reais via site: R$ ${valorReaisSite}</p>
-    <p>🪙 Custo em gold: ${valorGoldKK.toFixed(2)}kk</p>
-    <p>🧱 Custo em reais via gold: R$ ${valorReaisGold}</p>
+    <p>💵 Custo do item em reais via cash: R$ ${valorCashReais.toFixed(2)}</p>
+    <p>🧱 Custo do item em reais via gold: R$ ${valorGoldReais.toFixed(2)}</p>
     <p>${vantagem}</p>
   `;
 }
